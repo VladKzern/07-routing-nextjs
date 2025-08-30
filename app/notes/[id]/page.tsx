@@ -3,7 +3,7 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
 import { useParams } from "next/navigation";  
-import NoteDetailsClient from "../@modal/NoteDetails.client";
+import NoteDetailsClient from "./NoteDetails.client";
 
 export default function NoteDetailsPage() {
   const { id } = useParams();  
