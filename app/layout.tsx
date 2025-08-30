@@ -10,14 +10,21 @@ export const metadata: Metadata = {
   description: "Simple note management app",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+  modal,
+}: {
+  children: ReactNode;
+  modal?: ReactNode; 
+}) {
   return (
     <html lang="en">
       <body>
         <TanStackProvider>
           <Header />
-          {children}
+          <main>{children}</main>
           <Footer />
+          {modal}
         </TanStackProvider>
       </body>
     </html>

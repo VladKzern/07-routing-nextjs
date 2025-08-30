@@ -7,7 +7,7 @@ import css from "./TagsMenu.module.css";
 export default function TagsMenu() {
   const [open, setOpen] = useState(false);
 
-  const tags = ["All", "Work", "Personal", "Meeting", "Shopping"];
+  const tags = ["All", "Todo", "Work", "Personal", "Meeting", "Shopping"];
 
   const toggleMenu = () => setOpen((prev) => !prev);
   const closeMenu = () => setOpen(false);

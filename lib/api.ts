@@ -25,10 +25,13 @@ export interface CreateNoteParams {
 export const fetchNotes = async (
   page: number,
   perPage?: number,
+  tag?: string,
   search?: string
 ): Promise<FetchNotesResponse> => {
   const params: Record<string, unknown> = { page };
+
   if (typeof perPage === "number") params.perPage = perPage;
+  if (typeof tag === "string" && tag !== "" && tag !== "All") params.tag = tag;
   if (typeof search === "string" && search.trim()) params.search = search.trim();
 
   const { data }: AxiosResponse<FetchNotesResponse> = await api.get("/notes", {

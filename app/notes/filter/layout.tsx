@@ -1,10 +1,11 @@
-
 import { ReactNode } from "react";
+import css from "./FilterLayout.module.css";
 
-export default function FilterLayout({ children, }: {children: ReactNode; }) {
+export default function FilterLayout({ children, sidebar, }: { children: ReactNode; sidebar: ReactNode; }) {
   return (
-    <div>
-      {children}
+    <div className={css.layout}>
+      <aside className={css.sidebar}>{sidebar}</aside>
+      <main className={css.content}>{children}</main>
     </div>
   );
 }

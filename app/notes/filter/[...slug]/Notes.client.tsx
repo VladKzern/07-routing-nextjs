@@ -1,7 +1,8 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useMemo } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchNotes } from "@/lib/api";
-import { FetchNotesResponse } from "@/types/note";
+import { fetchNotes, type FetchNotesResponse } from "@/lib/api";
 import { useDebounce } from "use-debounce";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
@@ -25,13 +26,13 @@ export default function NotesClient({ tag }: Props) {
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isLoading, isError, isFetching } = useQuery<FetchNotesResponse, Error>({
-    queryKey: ["notes", tag, page, debouncedSearch],
-    queryFn: () => fetchNotes(page, perPage, tag === 'All' ? '' : tag), 
+    queryKey: ["notes", tag ?? "All", page, debouncedSearch ?? ""],
+    queryFn: () => fetchNotes(page, perPage, tag === "All" ? undefined : tag, debouncedSearch),
     staleTime: 5000,
     placeholderData: keepPreviousData,
   });
 
-  const notes = data?.notes ?? [];
+  const notes = useMemo(() => data?.notes ?? [], [data]);
   const totalPages = data?.totalPages ?? 0;
 
   const handleSearchChange = (value: string) => {
