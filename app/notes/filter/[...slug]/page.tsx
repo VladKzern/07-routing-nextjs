@@ -1,14 +1,17 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation"; 
 
 export default function NotesFilterPage() {
-  const { query } = useRouter();
-  const tag = Array.isArray(query.slug) ? query.slug[0] : query.slug;  
+  const { slug } = useParams();  
+
+  const tag = Array.isArray(slug) ? slug[0] : slug;  
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["notes", tag],
-    queryFn: () => fetchNotes(1, 12, tag === "All" ? "" : tag),
+    queryFn: () => fetchNotes(1, 12, tag === "All" ? "" : tag), 
   });
 
   if (isLoading) return <p>Loading notes...</p>;
