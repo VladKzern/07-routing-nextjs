@@ -2,31 +2,32 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
-import { useParams } from "next/navigation"; 
+import { useParams } from "next/navigation";
+import NotesClient from "@/components/NotesClient/NotesClient"; 
+import SidebarNotes from "./@sidebar/SidebarNotes"; 
 
 export default function NotesFilterPage() {
-  const { slug } = useParams();  
+  const { slug } = useParams(); 
 
-  const tag = Array.isArray(slug) ? slug[0] : slug;  
+  const tag = Array.isArray(slug) ? slug[0] : slug; 
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["notes", tag],
-    queryFn: () => fetchNotes(1, 12, tag === "All" ? "" : tag), 
+  const validTag = tag ?? "All";
+
+  const { isLoading, error } = useQuery({
+    queryKey: ["notes", validTag],
+    queryFn: () => fetchNotes(1, 12, validTag === "All" ? "" : validTag), 
   });
 
   if (isLoading) return <p>Loading notes...</p>;
   if (error) return <p>Error loading notes</p>;
 
-  const notes = data?.notes ?? [];
-
   return (
-    <div>
-      <h1>Notes - {tag}</h1>
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id}>{note.title}</li>
-        ))}
-      </ul>
+    <div style={{ display: "flex" }}>
+      <SidebarNotes />
+      <div style={{ flex: 1 }}>
+        <h1>Notes - {validTag}</h1>
+        <NotesClient tag={validTag} />
+      </div>
     </div>
   );
 }
