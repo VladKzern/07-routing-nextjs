@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import { useParams } from "next/navigation";
 import NotesClient from "@/components/NotesClient/NotesClient"; 
-import SidebarNotes from "./@sidebar/SidebarNotes"; 
+import SidebarNotes from "../@sidebar/SidebarNotes"; 
 
 export default function NotesFilterPage() {
   const { slug } = useParams(); 
