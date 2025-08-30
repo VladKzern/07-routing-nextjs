@@ -2,7 +2,6 @@ import Link from "next/link";
 import TagsMenu from "@/components/TagsMenu/TagsMenu";  
 import css from "./Header.module.css";  
 
-const tags = ["Todo", "Work", "Personal", "Meeting", "Shopping"];  
 
 export default function Header() {
   return (
@@ -18,8 +17,8 @@ export default function Header() {
           </li>
           
           <li className={css.navigationItem}>
-            <TagsMenu tags={tags} />
-          </li>
+          <TagsMenu />
+        </li>
         </ul>
       </nav>
     </header>
