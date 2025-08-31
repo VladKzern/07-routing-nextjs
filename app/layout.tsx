@@ -10,13 +10,7 @@ export const metadata: Metadata = {
   description: "Simple note management app",
 };
 
-export default function RootLayout({
-  children,
-  modal,
-}: {
-  children: ReactNode;
-  modal?: ReactNode; 
-}) {
+export default function RootLayout({ children, modal, }: { children: ReactNode; modal?: ReactNode; }) {
   return (
     <html lang="en">
       <body>

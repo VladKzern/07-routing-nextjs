@@ -5,13 +5,15 @@ import { fetchNoteById } from "@/lib/api";
 import { Note } from "@/types/note";
 import Modal from "@/components/Modal/Modal";
 import css from "./NotePreview.client.module.css";
+import { useRouter } from "next/navigation";
 
 interface Props {
   id: string;
-  onClose: () => void;
 }
 
-export default function NotePreview({ id, onClose }: Props) {
+export default function NotePreview({ id }: Props) {
+  const router = useRouter();
+
   const { data: note, isLoading, isError } = useQuery<Note, Error>({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
@@ -22,10 +24,10 @@ export default function NotePreview({ id, onClose }: Props) {
   if (isError || !note) return <p>Error loading note</p>;
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={() => router.back()}>
       <div className={css.header}>
         <h3>{note.title}</h3>
-        <button className={css.closeButton} onClick={onClose}>
+        <button className={css.closeButton} onClick={() => router.back()}>
           ×
         </button>
       </div>

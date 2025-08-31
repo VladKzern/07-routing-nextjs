@@ -4,11 +4,11 @@ import NotePreview from "./NotePreview.client";
 import { Suspense } from "react";
 
 interface NoteModalPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function NoteModalPage({ params }: NoteModalPageProps) {
-  const noteId = params.id;
+  const { id: noteId } = await params;
 
   if (!noteId) return null;
 
@@ -22,7 +22,7 @@ export default async function NoteModalPage({ params }: NoteModalPageProps) {
   return (
     <Suspense fallback={<p>Loading note...</p>}>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <NotePreview id={noteId} onClose={() => window.history.back()} />
+        <NotePreview id={noteId} />
       </HydrationBoundary>
     </Suspense>
   );
